@@ -9,23 +9,23 @@ const Offers = () => {
       original: "2.400.000", 
       discounted: "1.800.000", 
       discount: "-25% OFF", 
-      img: "https://images.unsplash.com/photo-1550581190-9c1c48d21d6c?q=80&w=1909&auto=format&fit=crop",
+      img: "/salas/sofa-modular-nordico.jpeg", // Asegúrate de que el nombre coincida
       desc: "Sofá estilo nórdico fabricado a medida en Bogotá"
     },
     { 
-      name: "Velvet Emerald", 
+      name: "Comedor Madera", 
       original: "3.200.000", 
       discounted: "2.720.000", 
       discount: "-15% OFF", 
-      img: "https://images.unsplash.com/photo-1567016432779-094069958ea5?q=80&w=2080&auto=format&fit=crop",
-      desc: "Sofá en terciopelo premium con acabados artesanales"
+      img: "/comedores/comedor-circular-madera.jpeg", 
+      desc: "Comedero echo en madera de roble"
     },
     { 
       name: "Leather Loft", 
       original: "4.500.000", 
       discounted: "3.600.000", 
       discount: "-20% OFF", 
-      img: "https://images.unsplash.com/photo-1506898667547-42e22a46e125?q=80&w=2012&auto=format&fit=crop",
+      img: "/individuales/silla-minimal-madera.jpeg", 
       desc: "Sofá en cuero genuino ideal para espacios modernos"
     }
   ];
