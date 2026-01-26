@@ -62,9 +62,10 @@ const Testimonials = () => {
 
   const handleWriteReview = () => {
     window.open(
-      "https://wa.me/573123743925?text=Hola%20IdeArtHome,%20quiero%20dejar%20mi%20reseña",
+      "https://share.google/ca9cKikxPK68iBAWD",
       "_blank"
     );
+
   };
 
   return (
