@@ -1,5 +1,6 @@
 import React from 'react';
 import { Clock, MapPin, Phone, CreditCard } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const Quality = () => {
   const info = [
@@ -23,7 +24,7 @@ const Quality = () => {
     },
     { 
       title: "Formas de Pago", 
-      desc: "Aceptamos tarjetas débito y crédito, efectivo y pagos electrónicos con Bold.", 
+      desc: "Aceptamos tarjetas débito y crédito, efectivo y pagos electrónicos con datáfono.", 
       icon: <CreditCard size={32} />,
       highlight: "Sin Recargos"
     },
@@ -32,54 +33,84 @@ const Quality = () => {
   return (
     <section
       id="visitanos"
-      className="py-20 bg-white px-6 relative overflow-hidden"
-      aria-labelledby="visitanos-muebles-bogota"
+      className="py-32 bg-white px-6 relative overflow-hidden"
     >
+      {/* --- BURBUJAS FLOTANTES DE COLORES --- */}
+      <div className="absolute inset-0 pointer-events-none">
+        {/* Burbuja Azul */}
+        <motion.div 
+          animate={{ x: [0, 50, 0], y: [0, 100, 0] }}
+          transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+          className="absolute -top-20 -left-20 w-[500px] h-[500px] bg-[#005293] opacity-10 blur-[120px] rounded-full"
+        />
+        {/* Burbuja Amarilla */}
+        <motion.div 
+          animate={{ x: [0, -80, 0], y: [0, 150, 0] }}
+          transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
+          className="absolute top-1/2 -right-20 w-[400px] h-[400px] bg-[#FFD700] opacity-10 blur-[100px] rounded-full"
+        />
+        {/* Burbuja Color Piel/Arena */}
+        <motion.div 
+          animate={{ x: [0, 100, 0], y: [0, -50, 0] }}
+          transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
+          className="absolute -bottom-20 left-1/4 w-[600px] h-[600px] bg-[#F5CBA7] opacity-20 blur-[130px] rounded-full"
+        />
+      </div>
+
       <div className="max-w-7xl mx-auto relative z-10">
 
-        {/* TÍTULO SEO LOCAL */}
-        <div className="text-center mb-14">
-          <h2
-            id="visitanos-muebles-bogota"
-            className="text-5xl md:text-8xl font-black mb-4 text-[#1A1A1A] uppercase italic"
+        {/* TÍTULO MEJORADO (FUERTE Y CON ESTILO) */}
+        <div className="text-center mb-20">
+          <motion.span 
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            className="text-[#005293] font-black uppercase tracking-[0.6em] text-[10px] md:text-xs mb-4 block"
           >
-            Visítanos en Bogotá
+            Experiencia Directa
+          </motion.span>
+          
+          <h2 className="text-6xl md:text-9xl font-black text-[#1A1A1A] uppercase tracking-tighter leading-[0.85] mb-8">
+            VISÍTANOS <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#005293] to-[#F5CBA7] italic">EN BOGOTÁ</span>
           </h2>
 
-          <p className="max-w-3xl mx-auto text-gray-500 text-sm leading-relaxed mb-6">
-            Visita nuestra tienda de <strong>muebles en el barrio 12 de Octubre en Bogotá</strong>,
-            donde diseñamos y fabricamos sofás, camas y comedores a medida.
-            Atención directa, precios justos y entrega garantizada.
-          </p>
-
-          <p className="text-[#C4A484] text-[11px] font-black uppercase tracking-[0.5em]">
-            La mejor atención en el corazón del 12 de Octubre
-          </p>
+          <div className="max-w-3xl mx-auto">
+            <p className="text-gray-500 text-base md:text-lg leading-relaxed mb-6 font-medium italic">
+              Visita nuestra tienda de <strong>muebles en el barrio 12 de Octubre en Bogotá</strong>,
+              donde diseñamos y fabricamos sofás, camas y comedores a medida.
+              Atención directa, precios justos y entrega garantizada.
+            </p>
+            <div className="w-24 h-1.5 bg-[#F5CBA7] mx-auto rounded-full"></div>
+          </div>
         </div>
 
         {/* GRID DE INFORMACIÓN */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {info.map((f, i) => (
-            <article
+            <motion.article
               key={i}
-              className="group p-8 bg-[#F9F9F9] border border-gray-100 hover:bg-white hover:border-[#C4A484] hover:shadow-[0_30px_60px_-15px_rgba(0,0,0,0.1)] transition-all duration-500 rounded-[2.5rem]"
+              whileHover={{ y: -15 }}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.1 }}
+              className="group p-10 bg-white/40 backdrop-blur-sm border border-gray-100 hover:border-[#005293] hover:shadow-[0_40px_80px_-20px_rgba(0,0,0,0.08)] transition-all duration-500 rounded-[3.5rem]"
             >
-              <div className="mb-6 inline-block p-4 text-[#C4A484] bg-white rounded-2xl shadow-sm group-hover:bg-[#1A1A1A] group-hover:text-white transition-all duration-500">
+              <div className="mb-8 inline-block p-5 text-[#005293] bg-[#005293]/5 rounded-3xl group-hover:bg-[#005293] group-hover:text-white transition-all duration-500">
                 {f.icon}
               </div>
 
-              <span className="block text-[10px] font-black text-[#C4A484] uppercase tracking-widest mb-2">
+              <span className="block text-[11px] font-black text-[#F5CBA7] uppercase tracking-widest mb-3">
                 {f.highlight}
               </span>
 
-              <h3 className="text-xl font-black mb-3 tracking-tighter uppercase italic text-[#1A1A1A]">
+              <h3 className="text-2xl font-black mb-4 tracking-tighter uppercase text-[#1A1A1A]">
                 {f.title}
               </h3>
 
               <p className="text-gray-500 text-sm leading-relaxed font-medium">
                 {f.desc}
               </p>
-            </article>
+            </motion.article>
           ))}
         </div>
       </div>

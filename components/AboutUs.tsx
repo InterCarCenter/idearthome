@@ -1,179 +1,142 @@
-import React from 'react';
-import { Instagram, Music, MessageCircle } from 'lucide-react';
-import { motion } from 'framer-motion';
+import React, { useState } from 'react';
+/* CAMBIAMOS LOS ICONOS PARA EVITAR EL ERROR DE IMPORTACIÓN */
+import { Sparkles, MessageCircle, ChevronRight, Maximize, Lamp, Wind } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
-/* Animaciones reutilizables */
-const fadeUp = {
-  hidden: { opacity: 0, y: 40 },
-  visible: { opacity: 1, y: 0 }
-};
-
-const stagger = {
-  visible: {
-    transition: {
-      staggerChildren: 0.15
+const Decor = () => {
+  const decorItems = [
+    { 
+      id: "espejo",
+      name: "Espejos Orgánicos", 
+      desc: "Marcos en pan de oro y formas asimétricas que son tendencia este 2026.", 
+      img: "https://images.unsplash.com/photo-1618220179428-22790b461013?q=80&w=800&auto=format&fit=crop",
+      icon: <Maximize size={20} /> // Representa el marco/espejo
+    },
+    { 
+      id: "iluminacion",
+      name: "Iluminación Premium", 
+      desc: "Lámparas de pie y candelabros modernos con acabados en negro mate y bronce.", 
+      img: "https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?q=80&w=800&auto=format&fit=crop",
+      icon: <Lamp size={20} /> // Icono de lámpara estándar
+    },
+    { 
+      id: "adornos",
+      name: "Adornos & Jarrones", 
+      desc: "Piezas de cerámica hechas a mano para darle el toque final a tu sala.", 
+      img: "https://images.unsplash.com/photo-1582555172866-f73bb12a2ab3?q=80&w=800&auto=format&fit=crop",
+      icon: <Wind size={20} /> // Representa la fluidez de los adornos
     }
-  }
-};
+  ];
 
-const AboutUs = () => {
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const sendWhatsApp = (itemName) => {
+    const phone = "573123743925"; 
+    const message = `Hola IdeArtHome! 👋 Me interesa recibir información y precios sobre: ${itemName}. ¿Me podrían asesorar?`;
+    window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, '_blank');
+  };
+
   return (
-    <section
-      id="nosotros"
-      aria-label="Sobre IdeArtHome - Muebles y Decoración en Bogotá"
-      className="py-24 bg-white px-6 relative overflow-hidden"
-    >
-      {/* TEXTO DECORATIVO */}
-      <div className="absolute top-1/2 left-0 -translate-y-1/2 text-[12vw] font-black text-gray-50 opacity-[0.05] pointer-events-none select-none uppercase tracking-tighter">
-        IdeArtHome
+    <section id="decoracion" className="py-32 bg-white px-6 relative overflow-hidden">
+      
+      {/* BURBUJAS DE FONDO */}
+      <div className="absolute inset-0 pointer-events-none z-0">
+        <div className="absolute top-1/4 -right-20 w-[600px] h-[600px] bg-[#005293] opacity-[0.06] blur-[120px] rounded-full" />
+        <div className="absolute -bottom-20 -left-20 w-[500px] h-[500px] bg-[#F5CBA7] opacity-[0.12] blur-[100px] rounded-full" />
       </div>
 
-      {/* CONTENEDOR */}
-      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
-
-        {/* ================== BLOQUE VISUAL ================== */}
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={fadeUp}
-          transition={{ duration: 0.8, ease: 'easeOut' }}
-          className="relative order-2 lg:order-1 flex justify-center lg:justify-start"
-        >
-          <div className="relative w-full max-w-lg group/wallet h-[400px] flex items-center justify-center">
-
-            {/* Fondo */}
-            <div className="absolute inset-0 z-0 overflow-hidden rounded-[3rem] grayscale opacity-5">
-              <img
-                src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc"
-                alt="Showroom de muebles IdeArtHome en Bogotá"
-                loading="lazy"
-                className="w-full h-full object-cover"
-              />
+      <div className="max-w-7xl mx-auto relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          
+          <div className="space-y-8 order-2 lg:order-1">
+            <div className="flex items-center gap-3">
+              <span className="p-2 bg-[#1A1A1A] rounded-lg text-white"><Sparkles size={18} /></span>
+              <span className="text-[#005293] font-black uppercase tracking-[0.4em] text-[10px]">Complementos IdeArt</span>
             </div>
 
-            {/* TARJETA AMEX */}
-            <div className="absolute w-[90%] h-[200px] bg-[#006fcf] rounded-[2rem] shadow-xl z-10 p-6
-              transition-all duration-700 ease-out
-              -translate-y-[25%] group-hover/wallet:-translate-y-[65%]
-              rotate-[-3deg] group-hover/wallet:rotate-[-8deg]">
-              <p className="text-white font-black italic text-lg">AMERICAN EXPRESS</p>
+            <h2 className="text-7xl md:text-8xl font-black uppercase tracking-tighter leading-[0.85] text-[#1A1A1A]">
+              DETALLES <br /> 
+              <span className="text-[#F5CBA7] italic font-light">MÁGICOS</span>
+            </h2>
+
+            <p className="text-gray-500 text-lg leading-relaxed max-w-md font-medium">
+              Eleva el nivel de tu hogar con nuestra línea de accesorios. Selecciona una categoría y escríbenos para ver el catálogo completo.
+            </p>
+
+            <div className="pt-4 space-y-4">
+              {decorItems.map((item, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setActiveIndex(idx)}
+                  className={`flex items-center justify-between w-full max-w-sm p-6 rounded-3xl border-2 transition-all duration-300 ${activeIndex === idx ? 'border-[#005293] bg-[#005293]/5 translate-x-4' : 'border-gray-100 bg-white hover:border-gray-200'}`}
+                >
+                  <div className="flex items-center gap-4">
+                    <div className={`${activeIndex === idx ? 'text-[#005293]' : 'text-gray-400'}`}>{item.icon}</div>
+                    <span className="font-black uppercase text-xs tracking-widest">{item.name}</span>
+                  </div>
+                  <ChevronRight size={16} className={activeIndex === idx ? 'text-[#005293]' : 'text-gray-300'} />
+                </button>
+              ))}
             </div>
-
-            {/* TARJETA BANCOLOMBIA */}
-            <div className="absolute w-[90%] h-[200px] bg-[#FDDA24] rounded-[2rem] shadow-xl z-10 p-6
-              translate-y-[25%] group-hover/wallet:translate-y-[65%]
-              rotate-[3deg] group-hover/wallet:rotate-[8deg] transition-all duration-700">
-              <p className="text-black font-black text-sm">Bancolombia</p>
-            </div>
-
-            {/* TARJETA PRINCIPAL */}
-            <motion.div
-              whileHover={{ scale: 1.04 }}
-              transition={{ type: 'spring', stiffness: 200 }}
-              className="absolute w-[95%] bg-[#1A1A1A] text-white p-10 rounded-[2.5rem]
-              shadow-[0_50px_100px_-20px_rgba(0,0,0,0.8)] z-30"
-            >
-              <h3 className="text-4xl font-black tracking-tighter uppercase">IDEARTHOME</h3>
-              <p className="text-[#C4A484] text-xs font-black uppercase tracking-[0.4em] mt-1">
-                Muebles & Decoración
-              </p>
-
-              <div className="mt-10 grid grid-cols-2 gap-8 border-t border-white/10 pt-8">
-                <div>
-                  <p className="font-black uppercase">Gloria Mahecha</p>
-                  <a
-                    href="https://wa.me/573123573343"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 text-[#25D366] hover:text-white transition"
-                  >
-                    <MessageCircle size={16} />
-                    312 357 3343
-                  </a>
-                </div>
-
-                <div className="text-right">
-                  <p className="font-black uppercase">Fredy Torres</p>
-                  <a
-                    href="https://wa.me/573123743925"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-end gap-2 text-[#25D366] hover:text-white transition"
-                  >
-                    <MessageCircle size={16} />
-                    312 374 3925
-                  </a>
-                </div>
-              </div>
-            </motion.div>
           </div>
-        </motion.div>
 
-        {/* ================== TEXTO ================== */}
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={stagger}
-          className="order-1 lg:order-2 space-y-10 text-center lg:text-left"
-        >
-          <motion.span
-            variants={fadeUp}
-            className="text-[11px] font-black uppercase tracking-[0.5em] text-[#C4A484] block"
-          >
-            Tradición & Confianza
-          </motion.span>
+          <div className="relative h-[550px] md:h-[650px] flex items-center justify-center order-1 lg:order-2">
+            <AnimatePresence mode="popLayout">
+              {decorItems.map((item, idx) => {
+                const isActive = activeIndex === idx;
+                const xOffset = (idx - activeIndex) * 45;
+                const zIndex = 50 - Math.abs(idx - activeIndex);
+                const scale = 1 - Math.abs(idx - activeIndex) * 0.1;
 
-          <motion.h2
-            variants={fadeUp}
-            className="text-6xl md:text-7xl lg:text-8xl font-black leading-[0.8] tracking-tighter"
-          >
-            QUIÉNES <br />
-            <span className="text-[#C4A484]">SOMOS</span>
-          </motion.h2>
+                return (
+                  <motion.div
+                    key={item.id}
+                    initial={{ opacity: 0, x: 100 }}
+                    animate={{ 
+                      opacity: isActive ? 1 : 0.6, 
+                      x: xOffset, 
+                      scale: scale,
+                      zIndex: zIndex,
+                      rotate: isActive ? 0 : (idx < activeIndex ? -8 : 8)
+                    }}
+                    transition={{ type: "spring", stiffness: 200, damping: 25 }}
+                    onClick={() => setActiveIndex(idx)}
+                    className="absolute w-[320px] md:w-[440px] aspect-[3/4] cursor-pointer"
+                  >
+                    <div className="w-full h-full bg-white rounded-[3.5rem] p-4 shadow-[0_40px_80px_-15px_rgba(0,0,0,0.15)] border border-gray-100 flex flex-col">
+                      <div className="flex-1 overflow-hidden rounded-[2.5rem] mb-6 relative group">
+                        <img src={item.img} alt={item.name} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                        
+                        {isActive && (
+                          <motion.div 
+                            initial={{ opacity: 0, y: 20 }} 
+                            animate={{ opacity: 1, y: 0 }}
+                            className="absolute inset-x-4 bottom-4 z-20"
+                          >
+                            <button 
+                              onClick={(e) => { e.stopPropagation(); sendWhatsApp(item.name); }}
+                              className="w-full bg-white/90 backdrop-blur-md hover:bg-[#005293] hover:text-white text-black py-5 rounded-3xl font-black uppercase text-[10px] tracking-[0.2em] transition-all flex items-center justify-center gap-3 shadow-2xl"
+                            >
+                              Consultar Espejo <MessageCircle size={18} />
+                            </button>
+                          </motion.div>
+                        )}
+                      </div>
+                      <div className="px-4 pb-4">
+                        <h3 className="text-3xl font-black text-[#1A1A1A] uppercase tracking-tighter mb-2">{item.name}</h3>
+                        <p className="text-gray-400 text-sm font-medium leading-snug">{item.desc}</p>
+                      </div>
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </AnimatePresence>
+          </div>
 
-          <motion.p
-            variants={fadeUp}
-            className="text-xl font-black italic uppercase border-l-4 border-[#C4A484] pl-6"
-          >
-            “Calidad certificada y facilidades de pago para tu hogar”
-          </motion.p>
-
-          <motion.p
-            variants={fadeUp}
-            className="text-gray-500 text-lg leading-relaxed max-w-xl"
-          >
-            IdeArtHome es una tienda de <strong>muebles y decoración en Bogotá</strong>,
-            ubicada en el barrio 12 de Octubre. Ofrecemos sofás, comedores y soluciones
-            para el hogar con convenios financieros seguros y atención personalizada.
-          </motion.p>
-
-          {/* REDES */}
-          <motion.div variants={fadeUp} className="flex gap-6 justify-center lg:justify-start pt-4">
-            <a
-              href="https://www.instagram.com/ideart_home/?hl=es"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Instagram IdeArtHome"
-              className="p-4 bg-gray-50 rounded-2xl hover:bg-[#C4A484] hover:text-white transition shadow-md"
-            >
-              <Instagram size={26} />
-            </a>
-            <a
-              href="https://www.tiktok.com/@ideart_home"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="TikTok IdeArtHome"
-              className="p-4 bg-gray-50 rounded-2xl hover:bg-black hover:text-white transition shadow-md"
-            >
-              <Music size={26} />
-            </a>
-          </motion.div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );
 };
 
-export default AboutUs;
+export default Decor;

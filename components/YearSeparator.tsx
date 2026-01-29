@@ -2,104 +2,74 @@ import React from 'react';
 
 const YearSeparator = () => {
   return (
-    <section
-      aria-label="IdeArtHome experiencia y trayectoria"
-      className="relative py-24 bg-[#0A0A0A] overflow-hidden border-y border-white/5"
-    >
-      {/* SEO oculto pero válido */}
-      <h2 className="sr-only">
-        IdeArtHome muebles en Bogotá – experiencia, calidad y diseño 2026
-      </h2>
-      <p className="sr-only">
-        Fabricación de muebles, sofás a medida, comedores y diseño interior en Bogotá.
-        IdeArtHome evoluciona con calidad artesanal año tras año.
-      </p>
-
-      {/* Glow decorativo */}
+    <section className="relative py-4 bg-[#0A0A0A] overflow-hidden border-y border-white/5 flex flex-col items-center justify-center">
+      
+      {/* Luces de fondo sutiles */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute left-1/2 top-1/2 w-[700px] h-[700px] bg-[#C4A484]/10 blur-[160px] rounded-full -translate-x-1/2 -translate-y-1/2" />
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[100px] bg-[#F5CBA7]/10 blur-[80px] rounded-full" />
       </div>
 
-      {/* Marquee */}
-      <div className="relative flex items-center gap-24 whitespace-nowrap animate-marquee">
-        {[...Array(8)].map((_, i) => (
-          <div key={i} className="flex items-center gap-14">
-            
-            {/* Marca */}
-            <span className="text-6xl md:text-8xl font-black uppercase tracking-tighter text-white/10 select-none">
-              IDEARTHOME
-            </span>
+      <div className="relative z-10 flex flex-row items-center gap-6 md:gap-10">
+        
+        {/* Marca Quieta */}
+        <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tighter text-white">
+          IDEART<span style={{ color: '#F5CBA7' }}>HOME</span>
+        </h2>
 
-            {/* Flip Año */}
-            <div className="flip-container h-24 md:h-28 w-40 md:w-48">
-              <div className="flip-inner h-full w-full">
-                <div className="flip-face flip-front">
-                  2025
-                </div>
-                <div className="flip-face flip-back">
-                  2026
-                </div>
-              </div>
-            </div>
-
+        {/* Contenedor del Cambio de Año - Altura reducida */}
+        <div className="year-box h-12 md:h-16 w-32 md:w-40 flex items-center justify-center">
+          <div className="year-inner">
+            <span className="year-old">2025</span>
+            <span className="year-new">2026</span>
           </div>
-        ))}
+        </div>
+
       </div>
 
-      {/* Estilos */}
       <style>{`
-        /* MARQUEE */
-        @keyframes marquee {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
-        }
-        .animate-marquee {
-          display: flex;
-          width: fit-content;
-          animation: marquee 30s linear infinite;
-        }
-
-        /* FLIP 3D */
-        .flip-container {
+        .year-box {
           perspective: 1000px;
         }
 
-        .flip-inner {
+        .year-inner {
           position: relative;
+          width: 100%;
+          height: 100%;
           transform-style: preserve-3d;
-          animation: flipYear 6s ease-in-out infinite;
+          animation: dropBack 4s cubic-bezier(0.7, 0, 0.3, 1) infinite;
         }
 
-        .flip-face {
+        .year-old, .year-new {
           position: absolute;
           inset: 0;
           display: flex;
           align-items: center;
           justify-content: center;
-          font-size: clamp(3rem, 6vw, 4.5rem);
           font-weight: 900;
-          letter-spacing: -0.05em;
           backface-visibility: hidden;
-          border-radius: 1rem;
+          line-height: 1;
         }
 
-        .flip-front {
-          color: rgba(255,255,255,0.2);
+        .year-old {
+          color: rgba(255, 255, 255, 0.2);
+          transform: rotateX(0deg) translateZ(30px);
+          font-size: 2.5rem;
         }
 
-        .flip-back {
-          transform: rotateX(180deg);
-          color: #C4A484;
-          text-shadow: 0 0 30px rgba(196,164,132,0.4);
+        .year-new {
+          color: #F5CBA7;
+          text-shadow: 0 0 20px rgba(245, 203, 167, 0.3);
+          transform: rotateX(90deg) translateZ(30px);
+          font-size: 2.5rem;
         }
 
-        @keyframes flipYear {
-          0%, 40% {
-            transform: rotateX(0deg);
-          }
-          60%, 100% {
-            transform: rotateX(180deg);
-          }
+        @keyframes dropBack {
+          0%, 20% { transform: rotateX(0deg); }
+          40%, 100% { transform: rotateX(-90deg); }
+        }
+
+        @media (min-width: 768px) {
+          .year-old, .year-new { font-size: 3.5rem; }
         }
       `}</style>
     </section>

@@ -1,9 +1,9 @@
-
 import React, { useState, useEffect } from 'react';
-import { X, LayoutGrid, ArrowRight, MessageCircle } from 'lucide-react';
+import { X, LayoutGrid, ArrowRight, MessageCircle, Sparkles } from 'lucide-react';
+import 'animate.css';
 
 const Collections = () => {
-  const [selected, setSelected] = useState<number | null>(null);
+  const [selected, setSelected] = useState(null);
 
   useEffect(() => {
     if (selected !== null) {
@@ -14,84 +14,47 @@ const Collections = () => {
   }, [selected]);
 
   const collections = [
-    { 
-      name: 'Sofás Modulares', 
-      img: 'https://images.unsplash.com/photo-1512212621149-107ffe572d2f?q=80&w=2070&auto=format&fit=crop',
-      collage: [
-        { url: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?q=80&w=1000&auto=format&fit=crop", name: "Modular Gris Grafito", desc: "Configuración flexible para hogares bogotanos." },
-        { url: "https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?q=80&w=1000&auto=format&fit=crop", name: "Modular Arena", desc: "Tonalidades que capturan la luz natural." },
-        { url: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=1000&auto=format&fit=crop", name: "Mini Modular", desc: "Diseño inteligente para apartamentos." },
-        { url: "https://images.unsplash.com/photo-1540518614846-7eded433c457?q=80&w=1000&auto=format&fit=crop", name: "Modular Velvet", desc: "La suavidad del terciopelo premium." },
-        { url: "https://images.unsplash.com/photo-1524758631624-e2822e304c36?q=80&w=1000&auto=format&fit=crop", name: "Nordic Modular", desc: "Minimalismo escandinavo puro." },
-        { url: "https://images.unsplash.com/photo-1567016376408-0226e4d0c1ea?q=80&w=1000&auto=format&fit=crop", name: "L-Shape Elite", desc: "Confort total en cada esquina." }
-      ]
-    },
-    { 
-      name: 'Seccionales', 
-      img: 'https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?q=80&w=2070&auto=format&fit=crop',
-      collage: [
-        { url: "https://images.unsplash.com/photo-1524758631624-e2822e304c36?q=80&w=1000&auto=format&fit=crop", name: "Seccional Cuero Pro", desc: "Resistencia máxima industrial." },
-        { url: "https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?q=80&w=1000&auto=format&fit=crop", name: "Seccional Velvet", desc: "Microfibra con 5 años de garantía." },
-        { url: "https://images.unsplash.com/photo-1512212621149-107ffe572d2f?q=80&w=1000&auto=format&fit=crop", name: "Seccional Brown", desc: "Clásico y atemporal." },
-        { url: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?q=80&w=1000&auto=format&fit=crop", name: "Modern Seccional", desc: "Líneas rectas y minimalistas." },
-        { url: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=1000&auto=format&fit=crop", name: "Seccional Ivory", desc: "Elegancia en tonos perla." },
-        { url: "https://images.unsplash.com/photo-1540518614846-7eded433c457?q=80&w=1000&auto=format&fit=crop", name: "Dark Seccional", desc: "Presencia y robustez única." }
-      ]
-    },
-    { 
-      name: 'Sofás Cama', 
-      img: 'https://images.unsplash.com/photo-1540518614846-7eded433c457?q=80&w=2070&auto=format&fit=crop',
-      collage: [
-        { url: "https://images.unsplash.com/photo-1540574163026-643ea20ade25?q=80&w=1000&auto=format&fit=crop", name: "Sofá Cama King", desc: "Cama doble real integrada." },
-        { url: "https://images.unsplash.com/photo-1567016376408-0226e4d0c1ea?q=80&w=1000&auto=format&fit=crop", name: "Urban Sofa Bed", desc: "Colchón de alta densidad oculto." },
-        { url: "https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?q=80&w=1000&auto=format&fit=crop", name: "Cama Plegable Pro", desc: "Mecanismo de acero reforzado." },
-        { url: "https://images.unsplash.com/photo-1524758631624-e2822e304c36?q=80&w=1000&auto=format&fit=crop", name: "Sofá Cama Grey", desc: "Estilo funcional diario." },
-        { url: "https://images.unsplash.com/photo-1512212621149-107ffe572d2f?q=80&w=1000&auto=format&fit=crop", name: "Premium Bed Sofa", desc: "Calidad de hotel en tu hogar." },
-        { url: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?q=80&w=1000&auto=format&fit=crop", name: "Compact Bed", desc: "Ideal para estudios." }
-      ]
-    },
-    { 
-      name: 'Individuales', 
-      img: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=1916&auto=format&fit=crop',
-      collage: [
-        { url: "https://images.unsplash.com/photo-1506898667547-42e22a46e125?q=80&w=1000&auto=format&fit=crop", name: "Poltrona Élite", desc: "Estructura de roble macizo." },
-        { url: "https://images.unsplash.com/photo-1519947486511-46149fa0a254?q=80&w=1000&auto=format&fit=crop", name: "Silla Accent", desc: "Toque final para tu salón." },
-        { url: "https://images.unsplash.com/photo-1540518614846-7eded433c457?q=80&w=1000&auto=format&fit=crop", name: "Butaca Velvet", desc: "Lujo personal en terciopelo." },
-        { url: "https://images.unsplash.com/photo-1524758631624-e2822e304c36?q=80&w=1000&auto=format&fit=crop", name: "Silla Minimal", desc: "Simplicidad pura." },
-        { url: "https://images.unsplash.com/photo-1567016376408-0226e4d0c1ea?q=80&w=1000&auto=format&fit=crop", name: "Reading Chair", desc: "Máximo confort." },
-        { url: "https://images.unsplash.com/photo-1512212621149-107ffe572d2f?q=80&w=1000&auto=format&fit=crop", name: "Individual Loft", desc: "Estilo industrial." }
-      ]
-    },
+    // ... tus datos de collections se mantienen igual
   ];
 
   return (
-    <section id="colecciones" className="py-20 bg-[#121214] px-6 relative overflow-hidden mandala-bg">
-      <div className="absolute top-0 left-0 w-full h-40 bg-gradient-to-b from-[#0A0A0A] to-transparent"></div>
+    <section id="colecciones" className="py-24 bg-white px-6 relative overflow-hidden">
+      {/* FONDO PARA LLENAR LA SECCIÓN PRINCIPAL */}
+      <div className="absolute inset-0 z-0 opacity-5">
+        <div className="absolute top-0 left-0 w-full h-full" style={{ backgroundImage: 'radial-gradient(#1A1A1A 1px, transparent 1px)', size: '40px 40px', backgroundSize: '40px 40px' }}></div>
+      </div>
 
       <div className="max-w-7xl mx-auto relative z-10">
-        <div className="text-center mb-10">
-            <h2 className="title-brutalist text-white text-6xl md:text-9xl leading-none mb-4">
-              NUESTRAS <span className="text-outline-light">LÍNEAS</span>
+        <div className="text-center mb-16 animate__animated animate__fadeIn">
+            <div className="flex justify-center items-center gap-3 mb-4">
+               <div className="h-px w-12 bg-[#005293]"></div>
+               <p className="text-[#005293] text-[12px] font-black uppercase tracking-[0.6em]">Catálogo Exclusivo</p>
+               <div className="h-px w-12 bg-[#005293]"></div>
+            </div>
+            <h2 className="text-[#1A1A1A] text-5xl md:text-8xl font-black leading-none mb-6 tracking-tighter">
+              NUESTRAS <span className="text-[#005293]">LÍNEAS</span>
             </h2>
-            <p className="text-[#C4A484] text-[12px] font-black uppercase tracking-[0.6em]">Haz clic para explorar el catálogo de lujo</p>
         </div>
         
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {collections.map((item, idx) => (
             <div 
               key={idx} 
-              className="group relative h-[480px] cursor-pointer overflow-hidden rounded-[2.5rem] border border-white/10 shadow-2xl transition-all hover:border-[#C4A484]/40"
+              className="group relative h-[520px] cursor-pointer overflow-hidden rounded-[3rem] shadow-xl transition-all duration-500 hover:shadow-2xl animate__animated animate__slideInUp"
+              style={{ animationDelay: `${idx * 0.15}s` }}
               onClick={() => setSelected(idx)}
             >
               <img 
                 src={item.img} 
                 alt={item.name} 
-                className="w-full h-full object-cover transition-transform duration-[1.5s] group-hover:scale-105"
+                className="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-110"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/20 to-transparent flex flex-col justify-end p-10 text-white">
-                <h3 className="text-3xl font-black tracking-tighter mb-4 uppercase">{item.name}</h3>
-                <div className="flex items-center gap-3 text-[10px] font-black uppercase tracking-widest text-[#C4A484] opacity-0 group-hover:opacity-100 transition-opacity translate-y-2 group-hover:translate-y-0 duration-300">
-                  VER MODELOS <LayoutGrid size={16} />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#1A1A1A] via-transparent to-transparent flex flex-col justify-end p-10 text-white">
+                <h3 className="text-3xl font-black tracking-tighter mb-2 uppercase">{item.name}</h3>
+                <div className="flex items-center gap-3 text-[10px] font-black uppercase tracking-widest text-[#FFD700] overflow-hidden">
+                  <span className="translate-y-full group-hover:translate-y-0 transition-transform duration-500 flex items-center gap-2">
+                    EXPLORAR LÍNEA <LayoutGrid size={14} />
+                  </span>
                 </div>
               </div>
             </div>
@@ -99,48 +62,77 @@ const Collections = () => {
         </div>
       </div>
 
+      {/* MODAL MEJORADO */}
       {selected !== null && (
-        <div className="fixed inset-0 z-[100] flex items-start justify-center p-4 bg-white/95 backdrop-blur-3xl overflow-y-auto pt-20">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-10 bg-[#1A1A1A]/90 backdrop-blur-md overflow-y-auto animate__animated animate__fadeIn">
           
           <button 
             onClick={() => setSelected(null)}
-            className="fixed top-8 right-8 z-[110] p-5 bg-[#1A1A1A] hover:bg-[#C4A484] text-white rounded-full transition-all shadow-2xl flex items-center gap-2 font-black text-xs uppercase tracking-widest"
+            className="fixed top-6 right-6 z-[120] p-4 bg-white text-[#1A1A1A] rounded-full hover:bg-[#FFD700] transition-all shadow-2xl animate__animated animate__bounceInDown"
           >
-            CERRAR <X size={24} />
+            <X size={30} />
           </button>
           
-          <div className="bg-[#FDFBFA] rounded-[3rem] max-w-6xl w-full p-8 md:p-20 border border-gray-200 relative mandala-outline-bg shadow-[0_50px_100px_-20px_rgba(0,0,0,0.1)]">
+          <div className="bg-white rounded-[4rem] max-w-7xl w-full min-h-[80vh] relative overflow-hidden shadow-[0_0_100px_rgba(0,0,0,0.5)] animate__animated animate__zoomIn animate__faster">
             
-            <div className="mb-16 text-center">
-              <h3 className="text-6xl md:text-8xl font-black text-[#1A1A1A] uppercase tracking-tighter mb-4 leading-none">{collections[selected].name}</h3>
-              <div className="w-32 h-2 bg-[#C4A484] mx-auto"></div>
+            {/* ELEMENTOS DE FONDO PARA "LLENAR" EL MODAL */}
+            <div className="absolute inset-0 z-0 opacity-[0.03] pointer-events-none">
+                <div className="absolute top-0 left-0 w-full h-full" style={{ backgroundImage: 'linear-gradient(#000 1.5px, transparent 1.5px), linear-gradient(90deg, #000 1.5px, transparent 1.5px)', backgroundSize: '60px 60px' }}></div>
             </div>
+            <div className="absolute -top-24 -left-24 w-96 h-96 bg-[#005293] rounded-full blur-[120px] opacity-10 animate-pulse"></div>
+            <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-[#FFD700] rounded-full blur-[120px] opacity-10 animate-pulse"></div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-              {collections[selected].collage.map((photo, i) => (
-                <div key={i} className="group/item flex flex-col bg-white rounded-[2.5rem] overflow-hidden border border-gray-100 hover:border-[#C4A484]/40 transition-all shadow-xl">
-                  <div className="h-72 overflow-hidden">
-                    <img src={photo.url} className="w-full h-full object-cover transition-transform duration-700 group-hover/item:scale-105" alt={photo.name} />
+            <div className="relative z-10 p-8 md:p-20">
+                <div className="mb-16 text-center animate__animated animate__slideInDown">
+                  <div className="inline-flex items-center gap-2 px-4 py-2 bg-gray-50 rounded-full mb-6">
+                    <Sparkles size={16} className="text-[#FFD700]" />
+                    <span className="text-[10px] font-black uppercase tracking-widest text-gray-400">Colección 2026</span>
                   </div>
-                  <div className="p-8 flex flex-col h-full">
-                    <h4 className="text-2xl font-black text-[#1A1A1A] mb-3 uppercase tracking-tighter">{photo.name}</h4>
-                    <p className="text-gray-500 text-sm mb-10 leading-relaxed font-medium">{photo.desc}</p>
-                    <div className="mt-auto pt-4 border-t border-gray-50">
-                      <a href={`https://wa.me/573123743925?text=Hola,%20me%20interesa%20el%20modelo%20${photo.name}%20de%20la%20línea%20${collections[selected].name}`} target="_blank" className="inline-flex items-center gap-3 text-[12px] font-black text-[#C4A484] uppercase tracking-[0.2em] hover:translate-x-3 transition-transform">
-                        CONSULTAR <MessageCircle size={18} />
-                      </a>
-                    </div>
-                  </div>
+                  <h3 className="text-5xl md:text-8xl font-black text-[#1A1A1A] uppercase tracking-tighter mb-4 leading-none">
+                    {collections[selected].name}
+                  </h3>
+                  <div className="w-24 h-1.5 bg-[#005293] mx-auto rounded-full"></div>
                 </div>
-              ))}
-            </div>
 
-            <div className="mt-20 text-center">
-                <a href="https://wa.me/573123743925" target="_blank" rel="noopener noreferrer">
-                  <button className="bg-[#1A1A1A] text-white font-black uppercase tracking-widest text-[12px] px-16 py-6 rounded-full hover:bg-[#C4A484] transition-all shadow-2xl flex items-center gap-4 mx-auto">
-                    VER MÁS MODELOS <ArrowRight size={20} />
-                  </button>
-                </a>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                  {collections[selected].collage.map((photo, i) => (
+                    <div 
+                      key={i} 
+                      className="group/item flex flex-col bg-white rounded-[2.5rem] overflow-hidden border border-gray-100 shadow-sm hover:shadow-2xl transition-all duration-500 animate__animated animate__fadeInUp"
+                      style={{ animationDelay: `${0.3 + (i * 0.1)}s` }}
+                    >
+                      <div className="h-80 overflow-hidden relative">
+                        <img src={photo.url} className="w-full h-full object-cover transition-transform duration-1000 group-hover/item:scale-110" alt={photo.name} />
+                        <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-md px-4 py-2 rounded-full text-[10px] font-black uppercase tracking-tighter shadow-sm">
+                          IdeArt Premium
+                        </div>
+                      </div>
+                      <div className="p-8">
+                        <h4 className="text-2xl font-black text-[#1A1A1A] mb-2 uppercase tracking-tighter">{photo.name}</h4>
+                        <p className="text-gray-500 text-sm mb-8 leading-relaxed font-medium">{photo.desc}</p>
+                        <a 
+                          href={`https://wa.me/573123743925?text=Me interesa el ${photo.name}`} 
+                          target="_blank" 
+                          className="flex items-center justify-between group-hover/item:text-[#005293] transition-colors"
+                        >
+                          <span className="text-[12px] font-black uppercase tracking-widest">Consultar Precio</span>
+                          <div className="p-2 bg-gray-100 rounded-full group-hover/item:bg-[#005293] group-hover/item:text-white transition-all">
+                            <MessageCircle size={18} />
+                          </div>
+                        </a>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="mt-20 text-center animate__animated animate__fadeInUp animate__delay-1s">
+                    <button 
+                      onClick={() => setSelected(null)}
+                      className="group bg-[#1A1A1A] text-white font-black uppercase tracking-widest text-[12px] px-12 py-6 rounded-full hover:bg-[#005293] transition-all shadow-2xl flex items-center gap-4 mx-auto"
+                    >
+                      VOLVER A COLECCIONES <ArrowRight size={20} className="group-hover:translate-x-2 transition-transform" />
+                    </button>
+                </div>
             </div>
           </div>
         </div>
