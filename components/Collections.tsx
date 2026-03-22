@@ -1,195 +1,222 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { X, LayoutGrid, MessageCircle, Sparkles, ArrowRight } from 'lucide-react';
-import 'animate.css';
+import { X, MessageCircle, ChevronLeft, ChevronRight, Minus, Plus } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const Collections = () => {
-  const [selected, setSelected] = useState(null);
-  const scrollRef = useRef(0); // ← ESTO GUARDA LA POSICIÓN
+  const [activeCategory, setActiveCategory] = useState(0); 
+  const [selectedItem, setSelectedItem] = useState(null); 
+  const [currentModalImg, setCurrentModalImg] = useState(0); 
+  const scrollRef = useRef(0);
 
+  // Manejo de scroll al abrir el modal de detalles
   useEffect(() => {
-    if (selected !== null) {
-      // Guarda posición del scroll y bloquea body
+    if (selectedItem !== null) {
       scrollRef.current = window.scrollY;
       document.body.style.position = 'fixed';
       document.body.style.top = `-${scrollRef.current}px`;
       document.body.style.width = '100%';
       document.body.style.overflow = 'hidden';
+      setCurrentModalImg(0); 
     } else {
-      // Restaura scroll EXACTO donde estaba
       document.body.style.position = '';
       document.body.style.top = '';
       document.body.style.width = '';
       document.body.style.overflow = '';
       window.scrollTo(0, scrollRef.current);
     }
+  }, [selectedItem]);
 
-    // Cleanup en desmontaje
-    return () => {
-      document.body.style.position = '';
-      document.body.style.top = '';
-      document.body.style.width = '';
-      document.body.style.overflow = '';
-    };
-  }, [selected]);
+  // Función maestra para generar los modelos según tus cantidades exactas
+  const generarModelos = (categoria, carpeta, prefijo, extension, cantidad, soloUna = false) => {
+    return Array.from({ length: cantidad }).map((_, i) => ({
+      name: `${categoria} ${i + 1}`,
+      desc: `Diseño exclusivo de nuestra línea ${categoria.toLowerCase()}. Fabricación artesanal con materiales premium.`,
+      badge: i === 0 ? "NUEVO" : "",
+      images: soloUna 
+        ? [`/${carpeta}/${prefijo}-${i+1}-v1.${extension}`] 
+        : [
+            `/${carpeta}/${prefijo}-${i+1}-v1.${extension}`,
+            `/${carpeta}/${prefijo}-${i+1}-v2.${extension}`,
+            `/${carpeta}/${prefijo}-${i+1}-v3.${extension}`,
+            `/${carpeta}/${prefijo}-${i+1}-v4.${extension}`
+          ]
+    }));
+  };
 
+  // Configuración de categorías con tus cantidades solicitadas
   const collections = [
-    { 
-      name: 'Sofás Modulares', 
-      img: '/salas/sofa-modular-principal.jpeg',
-      collage: [
-        { url: "/salas/sofa-modular-gris-grafito.jpg", name: "Modular Gris Grafito", desc: "Configuración flexible para hogares bogotanos." },
-        { url: "/salas/sofa-modular-arena.jpeg", name: "Modular Arena", desc: "Tonalidades que capturan la luz natural." },
-        { url: "/salas/sofa-modular-mini.jpeg", name: "Mini Modular", desc: "Diseño inteligente para apartamentos." },
-        { url: "/salas/sofa-modular-velvet.jpeg", name: "Modular Velvet", desc: "La suavidad del terciopelo premium." },
-        { url: "/salas/sofa-modular-nordico.jpeg", name: "Nordic Modular", desc: "Minimalismo escandinavo puro." },
-        { url: "/salas/sofa-modular-l-shape.jpeg", name: "L-Shape Elite", desc: "Confort total en cada esquina." }
-      ]
-    },
-    { 
-      name: 'Comedores', 
-      img: '/comedores/comedor-madera-principal.jpeg',
-      collage: [
-        { url: "/comedores/comedor-4-puestos-madera.jpeg", name: "Comedor 4 Puestos", desc: "Madera de cedro y acabados premium." },
-        { url: "/comedores/comedor-moderno-marmol.jpeg", name: "Comedor Moderno", desc: "Tapa de mármol y sillas ergonómicas." },
-        { url: "/comedores/comedor-circular-madera.jpeg", name: "Comedor Circular", desc: "Ideal para espacios acogedores." },
-        { url: "/comedores/mesa-industrial-madera-metal.jpeg", name: "Mesa Industrial", desc: "Base metálica y madera maciza." },
-        { url: "/comedores/comedor-nordico-roble.jpeg", name: "Estilo Nórdico", desc: "Simplicidad y elegancia en roble." },
-        { url: "/comedores/comedor-lujo-salon-grande.jpeg", name: "Luxury Dining", desc: "Diseño exclusivo para grandes salones." }
-      ]
-    },
-    { 
-      name: 'Camas', 
-      img: '/camas/cama-base-baul-principal.jpeg',
-      collage: [
-        { url: "/camas/cama-base-baul-hidraulica.jpeg", name: "Cama Base Baúl", desc: "Apertura hidráulica y gran almacenamiento." },
-        { url: "/camas/cama-king-size-tapizada.jpeg", name: "Cama King Size", desc: "Tapizado en lino de alta resistencia." },
-        { url: "/camas/cama-hidraulica-reforzada.jpeg", name: "Hidráulica Pro", desc: "Mecanismo reforzado garantizado." },
-        { url: "/camas/sofa-cama-gris.jpeg", name: "Sofá Cama Grey", desc: "Versatilidad total para visitas." },
-        { url: "/camas/sofa-cama-premium.jpeg", name: "Premium Bed Sofa", desc: "Confort de cama real en un sofá." },
-        { url: "/camas/sofa-cama-compacto.jpeg", name: "Compact Bed", desc: "Perfecto para estudios y oficinas." }
-      ]
-    },
-    { 
-      name: 'Individuales', 
-      img: '/individuales/poltrona-madera-principal.jpeg',
-      collage: [
-        { url: "/individuales/poltrona-roble-tela-antifluidos.jpeg", name: "Poltrona Élite", desc: "Estructura de roble y tela anti-fluidos." },
-        { url: "/individuales/silla-accent-moderna.jpeg", name: "Silla Accent", desc: "Diseño ergonómico y moderno." },
-        { url: "/individuales/butaca-velvet-terciopelo.jpeg", name: "Butaca Velvet", desc: "Terciopelo suave al tacto." },
-        { url: "/individuales/silla-minimal-madera.jpeg", name: "Silla Minimal", desc: "Líneas puras y funcionales." },
-        { url: "/individuales/silla-lectura-reading-chair.jpeg", name: "Reading Chair", desc: "Especial para largos momentos de lectura." },
-        { url: "/individuales/silla-lujo-acabados-mano.jpeg", name: "Silla de Lujo", desc: "Acabados hechos a mano." }
-      ]
-    }
+    { name: 'Sofás', collage: generarModelos('Sofá Modular', 'salas', 'sofas', 'png', 15, false) }, 
+    { name: 'Comedores', collage: generarModelos('Comedor', 'comedores', 'comedores', 'png', 9, true) }, 
+    
+    // 👇 MODIFICACIÓN PARA DORMITORIOS 👇
+    // Carpeta: 'Dormitorios' | Archivo: 'camas' | Cantidad: 6 | soloUna: true
+    { name: 'Dormitorios', collage: generarModelos('Cama', 'Dormitorios', 'camas', 'png', 6, true) },
+    
+    { name: 'Sillas Individuales', collage: generarModelos('Poltrona', 'individuales', 'individuales', 'png', 6, true) },
+    { name: 'Accesorios', collage: generarModelos('Accesorio', 'accesorios', 'accesorios', 'png', 6, true) },
+    { name: 'Espejos', collage: generarModelos('Espejo', 'espejos', 'espejos', 'png', 6, true) },
+    { name: 'Iluminación', collage: generarModelos('Lámpara', 'iluminacion', 'iluminacion', 'png', 3, true) }
   ];
 
   return (
-    <section id="colecciones" className="py-24 bg-white relative overflow-hidden">
-      {/* Fondo de puntos para llenar el espacio blanco (Sutil) */}
-      <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(#1A1A1A 2px, transparent 2px)', backgroundSize: '30px 30px' }}></div>
-
-      <div className="max-w-7xl mx-auto px-6 relative z-10">
-        <div className="text-center mb-16 animate__animated animate__fadeInDown">
-          <h2 className="text-[#1A1A1A] text-5xl md:text-8xl font-black uppercase italic mb-6 tracking-tighter">
-            Muebles a Medida <span className="text-[#005293]">en Bogotá</span>
-          </h2>
-          <p className="max-w-3xl mx-auto text-gray-500 text-base leading-relaxed font-medium">
-            Directo desde nuestro taller en el <strong className="text-[#005293]">barrio 12 de Octubre</strong>. 
-            Diseños que se acomodan a tu espacio y estilo de vida.
-          </p>
+    <section id="tienda" className="py-20 bg-white relative">
+      <div className="max-w-[1500px] mx-auto px-6 flex flex-col md:flex-row gap-10">
+        
+        {/* SIDEBAR IZQUIERDO */}
+        <div className="w-full md:w-[18%] md:sticky md:top-24 h-max">
+          <h3 className="text-xs font-medium uppercase mb-6 text-gray-400 border-b border-gray-100 pb-3 tracking-widest">
+            CATEGORÍAS DEL PRODUCTO
+          </h3>
+          <ul className="space-y-4">
+            {collections.map((cat, idx) => (
+              <li key={idx}>
+                <button 
+                  onClick={() => setActiveCategory(idx)}
+                  className={`text-sm w-full text-left transition-colors duration-200 ${
+                    activeCategory === idx ? 'font-bold text-[#1A1A1A]' : 'font-normal text-gray-500 hover:text-[#1A1A1A]'
+                  }`}
+                >
+                  {cat.name}
+                </button>
+              </li>
+            ))}
+          </ul>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {collections.map((item, idx) => (
-            <div
-              key={idx}
-              onClick={() => setSelected(idx)}
-              className="relative h-[550px] cursor-pointer overflow-hidden rounded-[2.5rem] shadow-2xl group animate__animated animate__slideInUp"
-              style={{ animationDelay: `${idx * 0.2}s` }}
+        {/* CONTENIDO PRINCIPAL: GRID ESTÁTICO (Sin carrusel automático) */}
+        <div className="w-full md:w-[82%]">
+          <AnimatePresence mode="wait">
+            <motion.div 
+              key={activeCategory} 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-16"
             >
-              <img
-                src={item.img}
-                alt={item.name}
-                className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent flex flex-col justify-end p-10">
-                <h3 className="text-3xl font-black uppercase italic text-white mb-2">
-                  {item.name}
-                </h3>
-                <span className="text-[#FFD700] text-xs font-black uppercase tracking-widest flex items-center gap-2 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
-                  Ver modelos <LayoutGrid size={16} />
-                </span>
-              </div>
-            </div>
-          ))}
+              {collections[activeCategory].collage.map((item, idx) => (
+                <div 
+                  key={idx} 
+                  className="cursor-pointer flex flex-col group"
+                  onClick={() => setSelectedItem(item)}
+                >
+                  {/* IMAGEN PRINCIPAL FIJA */}
+                  <div className="relative w-full aspect-[4/3] flex items-center justify-center mb-4 bg-transparent overflow-hidden">
+                    <img 
+                        src={item.images[0]} 
+                        alt={item.name} 
+                        className="w-full h-full object-contain mix-blend-multiply" 
+                    />
+                    
+                    {item.badge && (
+                      <div className="absolute top-0 right-0 bg-black text-white text-[9px] font-bold uppercase px-3 py-1.5 tracking-widest">
+                        {item.badge}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* INFO MINIMALISTA */}
+                  <div className="flex flex-col text-center md:text-left px-2">
+                    <h3 className="text-[13px] font-normal text-gray-800 leading-snug group-hover:underline decoration-1 underline-offset-4">
+                      {item.name}
+                    </h3>
+                  </div>
+                </div>
+              ))}
+            </motion.div>
+          </AnimatePresence>
         </div>
       </div>
 
-      {/* MODAL CORREGIDO - AHORA SÍ PUEDES BAJAR Y NO TE VOTA ARRIBA */}
-      {selected !== null && (
-        <div className="fixed inset-0 bg-[#1A1A1A]/95 z-[100] flex items-center justify-center p-4 animate__animated animate__fadeIn">
-          
-          <button
-            onClick={() => setSelected(null)}
-            className="fixed top-8 right-8 z-[110] bg-white p-5 rounded-full text-[#1A1A1A] hover:bg-[#FFD700] transition-all shadow-2xl animate__animated animate__bounceIn"
+      {/* MODAL DETALLES (RÉPLICA DE IMAGEN DE REFERENCIA) */}
+      <AnimatePresence>
+        {selectedItem && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-white z-[150] flex items-center justify-center p-0 md:p-6 overflow-y-auto"
           >
-            <X size={24} />
-          </button>
+            <button
+              onClick={() => setSelectedItem(null)}
+              className="absolute top-6 right-6 z-[160] text-gray-400 hover:text-black transition-colors"
+            >
+              <X size={32} strokeWidth={1.5} />
+            </button>
 
-          {/* CONTENEDOR SCROLLABLE DEL MODAL */}
-          <div className="w-full max-w-7xl max-h-[90vh] overflow-y-auto bg-white rounded-[4rem] p-8 md:p-20 animate__animated animate__zoomIn animate__faster scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
-            
-            {/* Decoración de fondo del modal */}
-            <div className="absolute inset-0 opacity-[0.02] pointer-events-none" style={{ backgroundImage: 'linear-gradient(#000 1px, transparent 1px), linear-gradient(90deg, #000 1px, transparent 1px)', backgroundSize: '50px 50px' }}></div>
-            <div className="absolute -top-24 -right-24 w-80 h-80 bg-[#005293]/10 blur-[100px] rounded-full"></div>
-
-            <div className="relative z-10">
-              <div className="text-center mb-16 animate__animated animate__fadeInDown animate__delay-0.5s">
-                <span className="text-[10px] font-black uppercase tracking-[0.5em] text-[#005293] mb-4 block">IdeArt Home · Catálogo</span>
-                <h3 className="text-5xl md:text-7xl font-black uppercase italic text-[#1A1A1A] tracking-tighter">
-                  {collections[selected].name}
-                </h3>
-                <div className="w-20 h-1.5 bg-[#FFD700] mx-auto mt-6 rounded-full"></div>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-                {collections[selected].collage.map((photo, i) => (
-                  <div 
-                    key={i} 
-                    className="bg-white rounded-[2.5rem] overflow-hidden shadow-xl border border-gray-100 group/item animate__animated animate__fadeInUp"
-                    style={{ animationDelay: `${0.6 + (i * 0.1)}s` }}
-                  >
-                    <div className="h-72 overflow-hidden relative">
-                      <img src={photo.url} alt={photo.name} className="w-full h-full object-cover transition-transform duration-700 group-hover/item:scale-110" />
-                      <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-4 py-1 rounded-full text-[9px] font-black uppercase">Garantía IdeArt</div>
-                    </div>
-                    <div className="p-8">
-                      <h4 className="font-black text-xl uppercase italic mb-2 text-[#1A1A1A]">{photo.name}</h4>
-                      <p className="text-gray-500 text-sm mb-8 font-medium leading-relaxed">{photo.desc}</p>
-                      <a
-                        href={`https://wa.me/573123743925?text=Hola,%20me%20interesa%20el%20modelo%20${photo.name}`}
-                        target="_blank"
-                        className="flex justify-center items-center gap-3 bg-[#1A1A1A] hover:bg-[#005293] text-white py-4 rounded-2xl text-[11px] font-black uppercase tracking-widest transition-all hover:scale-[1.02] active:scale-95"
-                      >
-                        Consultar precio <MessageCircle size={18} />
-                      </a>
-                    </div>
+            <div className="bg-white w-full max-w-7xl h-full md:h-auto min-h-[80vh] flex flex-col md:flex-row gap-8 pt-16 md:pt-0">
+              
+              {/* GALERÍA MODAL */}
+              <div className="w-full md:w-3/5 flex gap-4 md:gap-8 flex-col-reverse md:flex-row px-4 md:px-0">
+                {selectedItem.images.length > 1 && (
+                  <div className="w-full md:w-[15%] flex md:flex-col gap-3 overflow-x-auto md:overflow-visible">
+                      {selectedItem.images.map((img, i) => (
+                          <div 
+                              key={i}
+                              onClick={() => setCurrentModalImg(i)}
+                              className={`flex-shrink-0 w-20 md:w-full aspect-square border ${currentModalImg === i ? 'border-black' : 'border-transparent'} hover:border-gray-300 cursor-pointer p-1 transition-all`}
+                          >
+                              <img src={img} alt="thumbnail" className="w-full h-full object-contain mix-blend-multiply" />
+                          </div>
+                      ))}
                   </div>
-                ))}
+                )}
+
+                <div className={`w-full relative flex items-center justify-center ${selectedItem.images.length > 1 ? 'md:w-[85%]' : 'md:w-full'}`}>
+                    <motion.img 
+                        key={currentModalImg}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 0.3 }}
+                        src={selectedItem.images[currentModalImg]} 
+                        alt={selectedItem.name} 
+                        className="w-full h-[50vh] md:h-[70vh] object-contain mix-blend-multiply" 
+                    />
+                    
+                    {selectedItem.images.length > 1 && (
+                      <>
+                        <button onClick={() => setCurrentModalImg(prev => prev === 0 ? 3 : prev - 1)} className="absolute left-0 top-1/2 -translate-y-1/2 p-2 text-gray-400 hover:text-black"><ChevronLeft size={32} strokeWidth={1.5} /></button>
+                        <button onClick={() => setCurrentModalImg(prev => prev === 3 ? 0 : prev + 1)} className="absolute right-0 top-1/2 -translate-y-1/2 p-2 text-gray-400 hover:text-black"><ChevronRight size={32} strokeWidth={1.5} /></button>
+                      </>
+                    )}
+                </div>
               </div>
 
-              <div className="mt-20 text-center">
-                <button 
-                  onClick={() => setSelected(null)}
-                  className="inline-flex items-center gap-3 text-[12px] font-black uppercase tracking-[0.3em] text-gray-400 hover:text-[#005293] transition-colors"
-                >
-                  <ArrowRight className="rotate-180" size={18} /> Volver a líneas
-                </button>
+              {/* INFORMACIÓN Y COMPRA */}
+              <div className="w-full md:w-2/5 flex flex-col justify-center px-6 md:px-12 pb-12 md:pb-0">
+                <h2 className="text-3xl md:text-4xl font-normal text-[#1A1A1A] uppercase tracking-widest mb-6 font-serif">
+                    {selectedItem.name}
+                </h2>
+                <p className="text-gray-500 text-sm font-medium leading-relaxed mb-8">
+                  {selectedItem.desc}
+                </p>
+
+                <div className="flex flex-col gap-4 mt-auto">
+                  <div className="flex h-14">
+                    <div className="flex w-1/4 border border-gray-300 items-center justify-between px-4 text-gray-500">
+                        <button className="hover:text-black"><Minus size={16} /></button>
+                        <span className="text-sm font-medium text-black">1</span>
+                        <button className="hover:text-black"><Plus size={16} /></button>
+                    </div>
+                    <button className="w-3/4 bg-gray-500 text-white font-medium uppercase text-xs tracking-widest hover:bg-gray-600 transition-colors">
+                        AÑADIR AL CARRITO
+                    </button>
+                  </div>
+
+                  <a
+                    href={`https://wa.me/573123743925?text=Hola,%20me%20interesa%20el%20modelo%20*${selectedItem.name}*%20del%20catálogo.`}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="w-full h-14 flex justify-center items-center gap-2 bg-[#8C9C69] hover:bg-[#7A8A57] text-white text-xs font-medium uppercase tracking-widest transition-colors"
+                  >
+                    <MessageCircle size={18} /> Recibe asesoría por WhatsApp
+                  </a>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
-      )}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 };

@@ -1,25 +1,49 @@
-import React, { useState } from 'react';
-import { Palette, X, ChevronRight, Sparkles } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React from 'react';
+import { Palette, Sparkles } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const Fabrics = () => {
-  const [selectedFabric, setSelectedFabric] = useState(null);
-
+  // Array masivo con las 30 telas listas para que reemplaces los nombres y las rutas de las fotos
   const fabrics = [
-    { name: "Lino", desc: "Fibra natural, fresca y de apariencia orgánica. Es la elección predilecta para estilos nórdicos y minimalistas por su elegancia atemporal.", img: "/telas/lino.jpg" },
-    { name: "Terciopelo", desc: "Aporta un lujo visual inigualable. Nuestra selección cuenta con tratamiento antimanchas y una suavidad extrema al tacto.", img: "/telas/terciopelo.jpg" },
-    { name: "Chenille", desc: "Un tejido robusto y acogedor. Gracias a su trama, es altamente resistente al roce, ideal para hogares con mucho movimiento.", img: "/telas/chenille.jpg" },
-    { name: "Microfibra", desc: "Tecnología textil de alto desempeño. Repele líquidos y es sumamente fácil de limpiar, manteniendo su color por años.", img: "/telas/microfibra.jpg" },
-    { name: "Cuero Sintético", desc: "La apariencia del cuero genuino con mayor practicidad. Resistente, impermeable y con una textura de grano fino muy elegante.", img: "/telas/cuero-sintetico.jpg" },
-    { name: "Bouclé", desc: "La tendencia global del 2026. Su textura rizada y suave crea ambientes curvos y acogedores. Tacto tipo 'nube'.", img: "/telas/boucle.jpg" },
-    { name: "Jacquard", desc: "Tejido de alta gama donde el diseño se crea en la trama misma. Aporta cuerpo, estructura y una resistencia superior.", img: "/telas/jacquard.jpg" },
-    { name: "Canvas", desc: "Algodón de alta densidad. Rústico pero sofisticado, es casi indestructible, ideal para un estilo industrial o campestre.", img: "/telas/canvas.jpg" },
-    { name: "Suede", desc: "Imita la piel de durazno. Es visualmente cálido y tiene un efecto de 'escritura' al pasar la mano que encanta a todos.", img: "/telas/suede.jpg" },
-    { name: "Pana", desc: "Clásico reinventado. Sus canales verticales añaden una dimensión visual única y una resistencia al desgaste excepcional.", img: "/telas/pana.jpg" }
+    // --- FILA 1 (15 Telas) ---
+    { name: "Lino Puro", desc: "Fibra natural, fresca y orgánica.", img: "/telas/lino-1.jpg" },
+    { name: "Terciopelo Royal", desc: "Lujo visual con suavidad extrema.", img: "/telas/terciopelo-1.jpg" },
+    { name: "Chenille Cálido", desc: "Tejido robusto y acogedor.", img: "/telas/chenille-1.jpg" },
+    { name: "Microfibra Plus", desc: "Repele líquidos, fácil limpieza.", img: "/telas/microfibra-1.jpg" },
+    { name: "Cuero Sintético", desc: "Apariencia de cuero, impermeable.", img: "/telas/cuero-1.jpg" },
+    { name: "Bouclé Nube", desc: "Textura rizada y muy suave.", img: "/telas/boucle-1.jpg" },
+    { name: "Jacquard Élite", desc: "Alta gama con diseño en trama.", img: "/telas/jacquard-1.jpg" },
+    { name: "Canvas Rústico", desc: "Algodón de alta densidad.", img: "/telas/canvas-1.jpg" },
+    { name: "Suede Premium", desc: "Imita la piel de durazno.", img: "/telas/suede-1.jpg" },
+    { name: "Pana Clásica", desc: "Canales verticales resistentes.", img: "/telas/pana-1.jpg" },
+    { name: "Lino Sintético", desc: "Aspecto natural, mayor duración.", img: "/telas/lino-2.jpg" },
+    { name: "Terciopelo Mate", desc: "Acabado sin brillo, muy elegante.", img: "/telas/terciopelo-2.jpg" },
+    { name: "Chenille Jaspeado", desc: "Mezcla de hilos texturizados.", img: "/telas/chenille-2.jpg" },
+    { name: "Microfibra Pet", desc: "Anti-rasguños para mascotas.", img: "/telas/microfibra-2.jpg" },
+    { name: "Cuero Vintage", desc: "Efecto envejecido sofisticado.", img: "/telas/cuero-2.jpg" },
+
+    // --- FILA 2 (15 Telas) ---
+    { name: "Bouclé Grueso", desc: "Rizo marcado para más volumen.", img: "/telas/boucle-2.jpg" },
+    { name: "Jacquard Floral", desc: "Patrones clásicos tejidos.", img: "/telas/jacquard-2.jpg" },
+    { name: "Canvas Industrial", desc: "Ultra resistente al desgaste.", img: "/telas/canvas-2.jpg" },
+    { name: "Suede Texturizado", desc: "Tacto cálido con textura.", img: "/telas/suede-2.jpg" },
+    { name: "Pana Gruesa", desc: "Canales anchos, estilo retro.", img: "/telas/pana-2.jpg" },
+    { name: "Lino Lavado", desc: "Caída suave y aspecto relajado.", img: "/telas/lino-3.jpg" },
+    { name: "Terciopelo Brillante", desc: "Refleja la luz con elegancia.", img: "/telas/terciopelo-3.jpg" },
+    { name: "Chenille Liso", desc: "Tacto suave sin textura visual.", img: "/telas/chenille-3.jpg" },
+    { name: "Microfibra Estampada", desc: "Diseños modernos y prácticos.", img: "/telas/microfibra-3.jpg" },
+    { name: "Cuero Napa", desc: "Textura extra suave y fina.", img: "/telas/cuero-3.jpg" },
+    { name: "Bouclé Bicolor", desc: "Mezcla de dos tonos en el rizo.", img: "/telas/boucle-3.jpg" },
+    { name: "Jacquard Geométrico", desc: "Patrones modernos para acentos.", img: "/telas/jacquard-3.jpg" },
+    { name: "Canvas Suave", desc: "Resistencia con mejor tacto.", img: "/telas/canvas-3.jpg" },
+    { name: "Suede Acanalado", desc: "Combinación de texturas.", img: "/telas/suede-3.jpg" },
+    { name: "Tela Anti-Fluidos", desc: "Máxima protección garantizada.", img: "/telas/antifluidos.jpg" },
   ];
 
+  // Agrupamos exactamente 15 arriba y 15 abajo
+  const groupedFabrics = [fabrics.slice(0, 15), fabrics.slice(15, 30)];
+
   return (
-    /* EL ID "telas" ES LA ETIQUETA QUE BUSCAS PARA EL SCROLL */
     <section id="telas" className="py-32 bg-white px-6 relative overflow-hidden">
       
       {/* BURBUJAS DE FONDO */}
@@ -34,14 +58,9 @@ const Fabrics = () => {
           transition={{ duration: 12, repeat: Infinity }}
           className="absolute bottom-1/4 right-0 w-[500px] h-[500px] bg-[#FFD700] opacity-[0.08] blur-[120px] rounded-full"
         />
-        <motion.div 
-          animate={{ scale: [1, 1.1, 1] }}
-          transition={{ duration: 8, repeat: Infinity }}
-          className="absolute top-1/2 left-1/3 w-[600px] h-[600px] bg-[#F5CBA7] opacity-[0.15] blur-[130px] rounded-full"
-        />
       </div>
 
-      <div className="max-w-7xl mx-auto relative z-10">
+      <div className="max-w-[1400px] mx-auto relative z-10">
         
         {/* TÍTULO */}
         <div className="mb-24">
@@ -49,99 +68,79 @@ const Fabrics = () => {
             <div className="p-2 bg-[#1A1A1A] rounded-lg text-white">
               <Sparkles size={16} />
             </div>
-            <span className="text-[#1A1A1A] font-black uppercase tracking-[0.4em] text-[10px]">Textil 2026</span>
+            <span className="text-[#1A1A1A] font-black uppercase tracking-[0.4em] text-[10px]">Catálogo Premium 2026</span>
           </div>
           
-          <h2 className="text-[10vw] md:text-[7vw] font-black leading-[0.9] tracking-tighter text-[#1A1A1A] uppercase">
+          <h2 className="text-[10vw] md:text-[6vw] font-black leading-[0.9] tracking-tighter text-[#1A1A1A] uppercase">
             DESCUBRE <br />
             <span className="italic font-medium text-gray-400">nuestras</span> <span className="text-[#F5CBA7] italic">texturas</span> <span className="text-[#005293]">TELAS</span>
           </h2>
           <div className="w-32 h-3 bg-[#F5CBA7] mt-8 rounded-full"></div>
         </div>
 
-        {/* GRID DE TELAS */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 md:gap-10">
-          {fabrics.map((fabric, idx) => (
-            <motion.div 
-              key={idx} 
-              whileHover={{ y: -10 }}
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              onClick={() => setSelectedFabric(fabric)}
-              className="group cursor-pointer"
+        {/* CONTENEDOR DE LAS 2 FILAS GIGANTES */}
+        <div className="flex flex-col gap-8">
+          {groupedFabrics.map((row, rowIndex) => (
+            <div 
+              key={rowIndex} 
+              /* En móvil permite scroll horizontal (overflow-x-auto), en PC es fijo */
+              className="flex w-full h-[450px] md:h-[500px] gap-1 rounded-[2rem] overflow-x-auto md:overflow-hidden shadow-2xl bg-white border border-gray-100 scrollbar-hide"
             >
-              <div className="relative aspect-square mb-6 overflow-hidden rounded-[3rem] shadow-sm group-hover:shadow-2xl transition-all duration-500 bg-gray-50 border border-gray-100">
-                <img 
-                  src={fabric.img} 
-                  alt={fabric.name}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors" />
-              </div>
-              
-              <div className="px-2">
-                <h3 className="text-2xl font-black text-[#1A1A1A] uppercase tracking-tighter leading-none mb-2">{fabric.name}</h3>
-                <div className="flex items-center gap-2 text-[10px] font-black text-[#F5CBA7] uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-all">
-                  Detalles <ChevronRight size={12} />
+              {row.map((fabric, idx) => (
+                <div
+                  key={idx}
+                  /* En móvil miden 70px fijos, en PC se comprimen con flex-1 y se expanden a flex-[6] */
+                  className="relative group flex-shrink-0 md:flex-shrink md:flex-1 w-[70px] md:w-auto md:hover:flex-[6] hover:w-[280px] transition-all duration-700 ease-[cubic-bezier(0.25,0.8,0.25,1)] cursor-pointer overflow-hidden"
+                >
+                  {/* Imagen de la tela */}
+                  <img
+                    src={fabric.img}
+                    alt={fabric.name}
+                    className="absolute inset-0 w-full h-full object-cover brightness-[0.75] group-hover:brightness-100 transition-all duration-700"
+                  />
+                  
+                  {/* Etiqueta vertical cuando está cerrado */}
+                  <div className="absolute inset-0 flex items-center justify-center md:items-end md:justify-center md:pb-10 opacity-100 group-hover:opacity-0 transition-opacity duration-300">
+                    <div className="bg-white/90 backdrop-blur-md px-3 py-1.5 rounded-sm md:-rotate-90 md:-translate-y-12 shadow-lg whitespace-nowrap">
+                      <h3 className="text-[#1A1A1A] font-black uppercase tracking-[0.2em] text-[8px] md:text-[9px]">
+                        {fabric.name}
+                      </h3>
+                    </div>
+                  </div>
+
+                  {/* Contenido expandido (Información y Botón) */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#1A1A1A]/95 via-[#1A1A1A]/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 delay-75 flex flex-col justify-end p-6 md:p-8">
+                    <div className="transform translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 delay-150">
+                      <h3 className="text-white text-2xl md:text-3xl font-black uppercase mb-2 leading-none drop-shadow-lg">
+                        {fabric.name}
+                      </h3>
+                      <p className="text-gray-300 text-[10px] md:text-xs font-medium leading-relaxed mb-6 max-w-[200px] md:max-w-sm drop-shadow-md">
+                        {fabric.desc}
+                      </p>
+                      
+                      <a
+                        href={`https://wa.me/573123743925?text=Hola,%20me%20encantó%20la%20tela%20${fabric.name}.%20¿Me%20pueden%20dar%20más%20información?`}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex items-center gap-2 bg-[#F5CBA7] hover:bg-[#005293] hover:text-white text-[#1A1A1A] px-5 py-3 rounded-full text-[9px] md:text-[10px] font-black uppercase tracking-widest transition-colors w-max shadow-xl"
+                      >
+                        <Palette size={14} /> Cotizar
+                      </a>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </motion.div>
+              ))}
+            </div>
           ))}
         </div>
+
       </div>
 
-      {/* MODAL */}
-      <AnimatePresence>
-        {selectedFabric && (
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] flex items-center justify-center p-4 backdrop-blur-md bg-black/20"
-          >
-            <motion.div 
-              initial={{ scale: 0.9, y: 30 }}
-              animate={{ scale: 1, y: 0 }}
-              exit={{ scale: 0.9, y: 30 }}
-              className="bg-white max-w-4xl w-full rounded-[4rem] overflow-hidden shadow-[0_50px_100px_rgba(0,0,0,0.15)] flex flex-col md:flex-row relative"
-            >
-              <button 
-                onClick={() => setSelectedFabric(null)}
-                className="absolute top-8 right-8 z-20 bg-gray-100 p-3 rounded-full hover:bg-[#F5CBA7] hover:text-white transition-all"
-              >
-                <X size={20} />
-              </button>
-
-              <div className="w-full md:w-1/2 aspect-square md:aspect-auto">
-                <img src={selectedFabric.img} alt={selectedFabric.name} className="w-full h-full object-cover" />
-              </div>
-
-              <div className="p-12 md:p-16 w-full md:w-1/2 flex flex-col justify-center">
-                <div className="mb-8">
-                   <h3 className="text-5xl font-black text-[#1A1A1A] uppercase tracking-tighter mb-4 leading-none">
-                    {selectedFabric.name}
-                  </h3>
-                  <div className="w-12 h-1 bg-[#F5CBA7]"></div>
-                </div>
-                
-                <p className="text-gray-500 text-lg font-medium leading-relaxed mb-10">
-                  {selectedFabric.desc}
-                </p>
-                
-                <div className="mt-auto flex flex-col gap-4">
-                  <div className="flex items-center gap-3 text-[11px] font-black text-gray-400 uppercase tracking-widest">
-                    <Palette size={16} className="text-[#F5CBA7]" /> Disponible en múltiples tonos
-                  </div>
-                  <button className="w-full bg-[#1A1A1A] py-5 rounded-3xl text-white font-black uppercase text-[10px] tracking-[0.3em] hover:bg-[#005293] transition-colors">
-                    SOLICITAR MUESTRARIO
-                  </button>
-                </div>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {/* CSS extra para ocultar la barra de scroll en móviles y que se vea más limpio */}
+      <style dangerouslySetInnerHTML={{__html: `
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
+        .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+      `}} />
     </section>
   );
 };

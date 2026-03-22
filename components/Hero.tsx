@@ -64,7 +64,7 @@ const Hero = () => {
           </div>
 
           {/* IMAGEN PRINCIPAL */}
-          <div className="lg:col-span-5 relative px-4 md:px-0 -mt-12 lg:-mt-10 animate__animated animate__slideInRight">
+          <div className="lg:col-span-5 relative px-4 md:px-0 mt-2 lg:mt-4 animate__animated animate__slideInRight">
             <div className="relative overflow-hidden rounded-[3rem] aspect-[4/5] border border-gray-100 shadow-2xl mx-auto max-w-sm lg:max-w-none transition-all duration-700 hover:shadow-[0_35px_60px_-15px_rgba(0,82,147,0.3)]">
               <img
                 src="https://images.unsplash.com/photo-1550581190-9c1c48d21d6c?q=80&w=1909&auto=format&fit=crop"
