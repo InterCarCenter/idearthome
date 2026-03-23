@@ -33,17 +33,11 @@ const Hero = () => {
           {/* CONTENIDO PRINCIPAL */}
           <div className="lg:col-span-6 flex flex-col justify-center text-center lg:text-left items-center lg:items-start animate__animated animate__slideInLeft animate__delay-0.5s">
             
-            <div className="flex items-center gap-2 mb-4 animate__animated animate__fadeIn animate__delay-1s">
-              <Sparkles size={16} className="text-[#FFD700]" />
-              <span className="text-[10px] md:text-[12px] font-black uppercase tracking-[0.5em] block text-[#005293]">
-                IdeArt <span className="text-[#FFD700]">Home</span> <span className="text-gray-400">· Muebles en Bogotá</span>
-              </span>
-            </div>
 
             {/* LOGO con entrada elegante */}
             <div className="mb-8 flex justify-center w-full mx-auto max-w-md lg:max-w-lg animate__animated animate__fadeInDown animate__delay-1s">
               <img 
-                src="/inicio/logo.png" 
+                src="/inicio/logo2.png" 
                 alt="Logo IdeArt Home" 
                 className="w-full max-w-[320px] md:max-w-[420px] h-auto hover:scale-105 transition-transform duration-500" 
               />
@@ -67,7 +61,7 @@ const Hero = () => {
           <div className="lg:col-span-5 relative px-4 md:px-0 mt-2 lg:mt-4 animate__animated animate__slideInRight">
             <div className="relative overflow-hidden rounded-[3rem] aspect-[4/5] border border-gray-100 shadow-2xl mx-auto max-w-sm lg:max-w-none transition-all duration-700 hover:shadow-[0_35px_60px_-15px_rgba(0,82,147,0.3)]">
               <img
-                src="https://images.unsplash.com/photo-1550581190-9c1c48d21d6c?q=80&w=1909&auto=format&fit=crop"
+                src="/inicio/portada1.jpg"
                 alt="Muebles IdeArt Home Bogotá"
                 className="w-full h-full object-cover transition-transform duration-1000 hover:scale-110"
               />

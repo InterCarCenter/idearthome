@@ -14,10 +14,14 @@ const Footer = () => {
         <div className="flex flex-col lg:flex-row justify-between items-start gap-12 mb-20">
           
           {/* INFO EMPRESA */}
-          <div className="flex flex-col gap-8 max-w-md">
-            <h2 className="text-4xl md:text-6xl font-black tracking-tighter">
-              IDEART<span className="text-[#C4A484]">HOME</span>
-            </h2>
+
+<div className="flex flex-col gap-8 max-w-md">
+
+<h2 className="text-4xl md:text-6xl font-black tracking-tighter">
+
+IDEART<span className="text-[#C4A484]">HOME</span>
+
+</h2>
 
             <p className="text-gray-500 font-medium leading-relaxed">
               <strong>IDEARTHOME</strong> es una empresa especializada en la fabricación

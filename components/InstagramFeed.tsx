@@ -16,12 +16,12 @@ const stagger = {
 
 const InstagramFeed = () => {
   const posts = [
-    { id: 1, url: "/salas/sofa-modular-arena.jpeg", alt: "Sofá modular gris en Bogotá - IdeArtHome" },
-    { id: 2, url: "/comedores/comedor-madera-principal.jpeg", alt: "Comedores modernos en el barrio 12 de Octubre" },
-    { id: 3, url: "/camas/cama-base-baul-principal.jpeg", alt: "Camas con sistema hidráulico en Bogotá" },
-    { id: 4, url: "/salas/sofa-modular-arena.jpeg", alt: "Sofás premium fabricados en Colombia" },
-    { id: 5, url: "/individuales/butaca-velvet-terciopelo.jpeg", alt: "Poltronas de lujo personalizadas IdeArtHome" },
-    { id: 6, url: "/salas/sofa-modular-nordico.jpeg", alt: "Decoración de interiores de alta gama en Bogotá" }
+    { id: 1, url: "/feedinstagram/sofas-1-v1.jpg", alt: "Sofá modular gris en Bogotá - IdeArtHome" },
+    { id: 2, url: "/feedinstagram/sofas-2-v1.jpg", alt: "Comedores modernos en el barrio 12 de Octubre" },
+    { id: 3, url: "/feedinstagram/sofas-3-v1.jpg", alt: "Camas con sistema hidráulico en Bogotá" },
+    { id: 4, url: "/feedinstagram/sofas-4-v1.jpg", alt: "Sofás premium fabricados en Colombia" },
+    { id: 5, url: "/feedinstagram/sofas-5-v1.jpg", alt: "Poltronas de lujo personalizadas IdeArtHome" },
+    { id: 6, url: "/feedinstagram/sofas-6-v1.jpeg", alt: "Decoración de interiores de alta gama en Bogotá" }
   ];
 
   return (

@@ -13,11 +13,11 @@ const Header = () => {
 
   // ORDEN ACTUALIZADO SEGÚN TU SOLICITUD
   const menuItems = [
-    { label: 'Colecciones', id: '#colecciones' },
+    { label: 'Modelos', id: '#modelos' },
     { label: 'Materiales', id: '#telas' }, // Este conecta con tu componente Fabrics
     { label: 'Nosotros', id: '#nosotros' },
     { label: 'Detalles', id: '#decoracion' }, // Este conecta con la sección de espejos/adornos
-    { label: 'Contacto', id: '#visitanos' }
+    { label: 'Contacto', id: '#contacto' }
   ];
 
   return (
