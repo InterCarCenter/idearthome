@@ -1,7 +1,13 @@
-import React, { useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { MapPin, Phone, MessageCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
 import Button from './Button';
+
+const WA_NUMBER = '573123743925';
+const MAX_NAME = 120;
+const MAX_EMAIL = 254;
+const MAX_MESSAGE = 2000;
+const MIN_SECONDS_BETWEEN_SENDS = 8;
 
 /* Animaciones */
 const fadeUp = {
@@ -9,24 +15,64 @@ const fadeUp = {
   visible: { opacity: 1, y: 0 }
 };
 
+/** Evita caracteres de control y recorta (no sustituye un backend, pero limita abuso del enlace wa.me). */
+function sanitizeField(value: string, max: number): string {
+  return value
+    .replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g, '')
+    .trim()
+    .slice(0, max);
+}
+
 const Contact = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     message: ''
   });
+  /** Campo trampa: bots suelen rellenarlo; los humanos no lo ven. */
+  const [honeypot, setHoneypot] = useState('');
+  const [submitError, setSubmitError] = useState<string | null>(null);
+  const lastSendAt = useRef<number>(0);
 
-  const handleWhatsAppSubmit = (e) => {
+  const handleWhatsAppSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const text = `Hola IdeArtHome, mi nombre es ${formData.name}. Mi correo es ${formData.email}. Estoy interesado en: ${formData.message}`;
-    window.open(
-      `https://wa.me/573123743925?text=${encodeURIComponent(text)}`,
-      '_blank'
-    );
+    setSubmitError(null);
+
+    if (honeypot.trim() !== '') {
+      return;
+    }
+
+    const now = Date.now();
+    if (now - lastSendAt.current < MIN_SECONDS_BETWEEN_SENDS * 1000) {
+      setSubmitError('Espera unos segundos antes de enviar de nuevo.');
+      return;
+    }
+
+    const name = sanitizeField(formData.name, MAX_NAME);
+    const email = sanitizeField(formData.email, MAX_EMAIL);
+    const message = sanitizeField(formData.message, MAX_MESSAGE);
+
+    if (!name || !email || !message) {
+      setSubmitError('Completa nombre, correo y mensaje.');
+      return;
+    }
+
+    const text = `Hola IdeArtHome, mi nombre es ${name}. Mi correo es ${email}. Estoy interesado en: ${message}`;
+    const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(text)}`;
+
+    lastSendAt.current = now;
+    window.open(url, '_blank', 'noopener,noreferrer');
   };
 
-  const handleChange = (e) =>
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const handleChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      const { name, value } = e.target;
+      const max =
+        name === 'name' ? MAX_NAME : name === 'email' ? MAX_EMAIL : name === 'message' ? MAX_MESSAGE : value.length;
+      setFormData((prev) => ({ ...prev, [name]: value.slice(0, max) }));
+    },
+    []
+  );
 
   return (
     <section
@@ -59,36 +105,74 @@ const Contact = () => {
               Cotiza tu mueble ideal
             </h2>
 
-            <form className="space-y-8" onSubmit={handleWhatsAppSubmit}>
-              <label className="sr-only">Nombre</label>
+            <form className="space-y-8" onSubmit={handleWhatsAppSubmit} noValidate>
+              {/* Honeypot: no quitar; debe quedar fuera de pantalla y sin foco habitual */}
+              <div className="pointer-events-none absolute h-0 w-0 overflow-hidden opacity-0" aria-hidden="true">
+                <label htmlFor="contact-company">Empresa</label>
+                <input
+                  id="contact-company"
+                  type="text"
+                  name="company"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  value={honeypot}
+                  onChange={(e) => setHoneypot(e.target.value)}
+                />
+              </div>
+
+              <label className="sr-only" htmlFor="contact-name">
+                Nombre
+              </label>
               <input
+                id="contact-name"
                 type="text"
                 name="name"
                 required
+                autoComplete="name"
+                maxLength={MAX_NAME}
                 onChange={handleChange}
+                value={formData.name}
                 placeholder="Nombre completo"
                 className="w-full bg-transparent border-b border-white/10 py-4 text-white text-lg outline-none focus:border-[#C4A484]"
               />
 
-              <label className="sr-only">Correo</label>
+              <label className="sr-only" htmlFor="contact-email">
+                Correo
+              </label>
               <input
+                id="contact-email"
                 type="email"
                 name="email"
                 required
+                autoComplete="email"
+                inputMode="email"
+                maxLength={MAX_EMAIL}
                 onChange={handleChange}
+                value={formData.email}
                 placeholder="Correo electrónico"
                 className="w-full bg-transparent border-b border-white/10 py-4 text-white text-lg outline-none focus:border-[#C4A484]"
               />
 
-              <label className="sr-only">Mensaje</label>
+              <label className="sr-only" htmlFor="contact-message">
+                Mensaje
+              </label>
               <textarea
+                id="contact-message"
                 name="message"
                 rows={4}
                 required
+                maxLength={MAX_MESSAGE}
                 onChange={handleChange}
+                value={formData.message}
                 placeholder="¿Buscas sofás o comedores en Bogotá? Cuéntanos tu idea…"
                 className="w-full bg-transparent border-b border-white/10 py-4 text-white text-lg outline-none resize-none focus:border-[#C4A484]"
               />
+
+              {submitError ? (
+                <p className="text-sm text-amber-400" role="alert">
+                  {submitError}
+                </p>
+              ) : null}
 
               <Button
                 type="submit"
@@ -100,7 +184,7 @@ const Contact = () => {
             </form>
 
             <p className="mt-6 text-[10px] uppercase tracking-widest text-gray-500">
-              Respuesta rápida · Atención personalizada en Bogotá
+              El mensaje se abre en WhatsApp; no guardamos datos en este sitio.
             </p>
           </motion.div>
 
@@ -127,7 +211,12 @@ const Contact = () => {
             </div>
 
             <div className="flex gap-4 flex-wrap">
-              <a href="https://maps.app.goo.gl/3XzQfHqGz8WvYFv88" target="_blank" className="flex-1">
+              <a
+                href="https://maps.app.goo.gl/3XzQfHqGz8WvYFv88"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-1"
+              >
                 <Button variant="outline" className="!w-full !rounded-full !text-white border-white/20 hover:!bg-white hover:!text-black">
                   <MapPin size={18} /> Cómo llegar
                 </Button>
