@@ -96,9 +96,6 @@ const Collections = () => {
     { name: 'Comedores', collage: generarModelos('Comedor', 'comedores', 'comedores', 'png', 9, true) }, 
     { name: 'Dormitorios', collage: generarModelos('Cama', 'Dormitorios', 'camas', 'png', 6, true) },
     { name: 'Sillas Individuales', collage: generarModelos('Poltrona', 'individuales', 'individuales', 'png', 6, true) },
-    { name: 'Accesorios', collage: generarModelos('Accesorio', 'accesorios', 'accesorios', 'png', 6, true) },
-    { name: 'Espejos', collage: generarModelos('Espejo', 'espejos', 'espejos', 'png', 6, true) },
-    { name: 'Iluminación', collage: generarModelos('Lámpara', 'iluminacion', 'iluminacion', 'png', 3, true) }
   ];
 
   return (
